@@ -65,4 +65,31 @@ class UserController extends Controller
     }
 
 
+    public function update(Request $request, $id = null)
+    {
+        if ($id === null) {
+            $user = $request->user();
+        } else {
+            $user = User::findOrFail($id);
+            
+            if (!$this->roleService->canUpdateUserProfile($request->user(), $user->id)) {
+                return response()->json([
+                    'message' => 'Only admin can access',
+                ], 403);
+            }
+        }
+        
+        $validated = $request->validate([
+            'name' => ['sometimes', 'string', 'max:255'],
+            'email' => ['sometimes', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'password' => ['sometimes', 'confirmed', 'min:8'],
+        ]);
+        
+        $user->update($validated);
+        
+        return new UserResource($user);
+    }
+
+
+
 }
