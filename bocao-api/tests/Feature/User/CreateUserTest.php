@@ -15,8 +15,8 @@ class CreateUserTest extends ApiTestCase
         $userData = [
             'name' => 'User',
             'email' => 'user@example.com',
-            'password' => '123',
-            'password_confirmation' => '123',
+            'password' => '12345678',
+            'password_confirmation' => '12345678',
         ];
 
         $response = $this->postJson('/api/users', $userData);
@@ -60,8 +60,8 @@ class CreateUserTest extends ApiTestCase
         $userData = [
             'name' => 'anna',
             'email' => 'anna@example.com',
-            'password' => '123jas',
-            'password_confirmation' => '123jas',
+            'password' => '12345jas',
+            'password_confirmation' => '12345jas',
         ];
 
         $response = $this->postJson('/api/users', $userData);
@@ -76,7 +76,7 @@ class CreateUserTest extends ApiTestCase
         $userData = [
             'name' => 'User',
             'email' => 'user@example.com',
-            'password' => '123',
+            'password' => '12345678',
             'password_confirmation' => 'not_that_password',
         ];
 
@@ -109,8 +109,8 @@ class CreateUserTest extends ApiTestCase
         $userData = [
             'name' => 'User',
             'email' => 'not_a_mail',
-            'password' => '123',
-            'password_confirmation' => '123',
+            'password' => '12345678',
+            'password_confirmation' => '12345678',
         ];
 
         $response = $this->postJson('/api/users', $userData);
