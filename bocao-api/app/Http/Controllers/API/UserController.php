@@ -89,6 +89,26 @@ class UserController extends Controller
         
         return new UserResource($user);
     }
+    public function delete(Request $request, $id = null)
+    {
+        if ($id === null) {
+            $user = $request->user();
+        } else {
+            $user = User::findOrFail($id);
+            
+            if (!$this->roleService->canDeleteUser($request->user(), $user->id)) {
+                return response()->json([
+                    'message' => 'Only admin can access.',
+                ], 403);
+            }
+        }
+        
+        $user->tokens()->delete();
+        
+        $user->delete();
+        
+        return response()->json(null, 204);
+    }
 
 
 
