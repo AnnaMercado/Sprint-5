@@ -46,7 +46,7 @@ class UpdateUserTest extends ApiTestCase
 
   
 
-    public function test_email_must_mail(): void
+    public function test_email_mus_be_mail(): void
     {
         $this->createAuthenticatedUser();
         
@@ -101,7 +101,7 @@ class UpdateUserTest extends ApiTestCase
             'name' => 'New Name',
         ];
         
-        $response = $this->putJson('/api/users/' . $anotherUser->id, $updatedData, $this->authHeaders());
+        $response = $this->putJson('/api/users/' . $User->id, $updatedData, $this->authHeaders());
 
         $response->assertStatus(200);
         
