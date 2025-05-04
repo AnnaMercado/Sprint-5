@@ -46,16 +46,13 @@ class ReadUserTest extends ApiTestCase
     {
         $this->createAuthenticatedUser();
         
-        // Crear otro usuario
         $adminUser = User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
         ]);
         
-        // Dar permiso admin al usuario actual para ver otros perfiles
         $this->user->assignRole('admin');
         
-        // Probar acceso al perfil específico
         $response = $this->getJson('/api/users/' . $adminUser->id, $this->authHeaders());
 
         $response->assertStatus(200)
@@ -73,10 +70,8 @@ class ReadUserTest extends ApiTestCase
     {
         $this->createAuthenticatedUser();
         
-        // Crear otro usuario
         $User = User::factory()->create();
         
-        // Intentar acceder al perfil del otro usuario
         $response = $this->getJson('/api/users/' . $User->id, $this->authHeaders());
 
         $response->assertStatus(403);
