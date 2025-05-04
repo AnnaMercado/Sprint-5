@@ -12,4 +12,8 @@ class RoleService
         return $user->hasRole('admin');
     }
 
+    public function canViewUserProfile($user)
+    {
+        return $user->hasRole('admin');
+    }
 }

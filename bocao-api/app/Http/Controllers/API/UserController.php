@@ -17,6 +17,7 @@ class UserController extends Controller
         $this->roleService = $roleService;
     }
 
+
     public function create(Request $request)
     {
         $validatedData = $request->validate([
@@ -40,7 +41,28 @@ class UserController extends Controller
             'token' => $token,
         ], 201);
     }
+    public function read(Request $request)
+    {
+        if ($this->roleService->canViewAllUsers($request->user())) {
+            return UserResource::collection(User::all());
+        }
+        
+        return UserResource::collection(User::where('id', $request->user()->id)->get());
+    }
 
+ 
+    public function show(Request $request, $id)
+    {
+        $requestedUser = User::findOrFail($id);
+        
+        if ($this->roleService->canViewUserProfile($request->user(), $id)) {
+            return new UserResource($requestedUser);
+        }
+        
+        return response()->json([
+            'message' => 'You have to be admin to access.',
+        ], 403);
+    }
 
 
 }

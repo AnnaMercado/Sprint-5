@@ -29,7 +29,7 @@ class ReadUserTest extends ApiTestCase
             
         $response->assertJsonFragment([
             'email' => $this->user->email,
-            'name' => 'User',
+            'name' => 'Test User',
         ]);
         
         $this->assertCount(1, $response->json('data'));
@@ -49,7 +49,7 @@ class ReadUserTest extends ApiTestCase
         // Crear otro usuario
         $adminUser = User::factory()->create([
             'name' => 'Admin',
-            'email' => 'user@example.com',
+            'email' => 'admin@example.com',
         ]);
         
         // Dar permiso admin al usuario actual para ver otros perfiles
