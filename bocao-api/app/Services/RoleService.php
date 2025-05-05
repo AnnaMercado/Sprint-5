@@ -16,6 +16,7 @@ class RoleService
     {
         return $user->hasRole('admin');
     }
+    
     public function canUpdateUserProfile($user)
     {
         return $user->hasRole('admin');

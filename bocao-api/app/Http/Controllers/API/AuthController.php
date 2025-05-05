@@ -9,12 +9,7 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    /**
-     * Handle user login
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -37,12 +32,6 @@ class AuthController extends Controller
         ], 200);
     }
 
-    /**
-     * Handle user logout
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function logout(Request $request)
     {
         $token = $request->user()->token();

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\{ AuthController,UserController};
+use App\Http\Controllers\API\{ AuthController,UserController, RestaurantController};
 
 
 Route::post('/tokens', [AuthController::class, 'login'])->name('tokens.create');
@@ -13,6 +13,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/users', [UserController::class, 'read'])->name('users.read');
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::put('/users/{id?}', [UserController::class, 'update'])->name('users.update');
-
     Route::delete('/users/{id?}', [UserController::class, 'delete'])->name('users.delete');
+
+    Route::post('/restaurants', [RestaurantController::class, 'create'])->name('restaurants.create');
 });
