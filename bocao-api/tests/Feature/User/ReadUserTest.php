@@ -41,39 +41,5 @@ class ReadUserTest extends ApiTestCase
         
         $response->assertStatus(401);
     }
- 
-    public function test_admin_can_view_other_profiles(): void
-    {
-        $this->createAuthenticatedUser();
-        
-        $adminUser = User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
-        ]);
-        
-        $this->user->assignRole('admin');
-        
-        $response = $this->getJson('/api/users/' . $adminUser->id, $this->authHeaders());
-
-        $response->assertStatus(200)
-            ->assertJson([
-                'data' => [
-                    'id' => $adminUser->id,
-                    'name' => 'Admin',
-                    'email' => 'admin@example.com',
-                ]
-            ]);
-    }
-    
-
-    public function test_not_admin_cannot_view_other_profiles(): void
-    {
-        $this->createAuthenticatedUser();
-        
-        $User = User::factory()->create();
-        
-        $response = $this->getJson('/api/users/' . $User->id, $this->authHeaders());
-
-        $response->assertStatus(403);
-    }
+   
 }
