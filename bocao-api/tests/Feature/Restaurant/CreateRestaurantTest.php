@@ -4,7 +4,6 @@ namespace Tests\Feature\Restaurant;
 
 use Tests\Feature\ApiTestCase;
 use App\Models\Restaurant;
-use App\Models\User;
 
 class CreateRestaurantTest extends ApiTestCase
 {
@@ -73,10 +72,9 @@ class CreateRestaurantTest extends ApiTestCase
             ->assertJsonValidationErrors(['phone']);
     }
 
-
     public function test_admin_can_create_restaurant(): void
     {
-        $this->createAuthenticatedUser(); // crea $this->user
+        $this->createAuthenticatedUser();
 
         $this->user->assignRole('admin');
 
@@ -89,13 +87,22 @@ class CreateRestaurantTest extends ApiTestCase
         $response = $this->postJson('/api/restaurants', $restaurantData, $this->authHeaders());
 
         $response->assertStatus(201)
-            ->assertJsonStructure(['data' => ['id', 'name', 'address', 'phone']]);
+            ->assertJsonStructure([
+                'data' => [
+                    'id',
+                    'name',
+                    'address',
+                    'phone',
+                    'user_id',
+                    'created_at',
+                ]
+            ]);
 
         $this->assertDatabaseHas('restaurants', [
             'name' => 'Restaurant Admin',
+            'user_id' => $this->user->id,
         ]);
     }
-
 
     public function test_not_admin_cannot_create_restaurant(): void
     {
@@ -115,9 +122,4 @@ class CreateRestaurantTest extends ApiTestCase
             'name' => 'Restaurant User',
         ]);
     }
-    
-
-
-
-            
 }
