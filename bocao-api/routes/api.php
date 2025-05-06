@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\{ AuthController,UserController, RestaurantController};
+use App\Http\Controllers\API\{ AuthController,UserController, RestaurantController, CommentController};
 
 
 Route::post('/tokens', [AuthController::class, 'login'])->name('tokens.create');
@@ -20,4 +20,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/restaurants/{id}', [RestaurantController::class, 'show'])->name('restaurants.show');
     Route::put('/restaurants/{id?}', [RestaurantController::class, 'update'])->name('restaurants.update');
     Route::delete('/restaurants/{id?}', [RestaurantController::class, 'delete'])->name('restaurants.delete');
+
+    Route::post('/restaurants/{restaurant}/comments', [CommentController::class, 'create'])->name('comments.create');
 });
