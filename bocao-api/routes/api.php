@@ -19,4 +19,5 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/restaurants', [RestaurantController::class, 'read'])->name('restaurants.read');
     Route::get('/restaurants/{id}', [RestaurantController::class, 'show'])->name('restaurants.show');
     Route::put('/restaurants/{id?}', [RestaurantController::class, 'update'])->name('restaurants.update');
+    Route::delete('/restaurants/{id?}', [RestaurantController::class, 'delete'])->name('restaurants.delete');
 });
