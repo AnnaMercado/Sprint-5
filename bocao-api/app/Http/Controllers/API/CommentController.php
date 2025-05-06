@@ -70,4 +70,20 @@ class CommentController extends Controller
             'data' => $comment,
         ], 200);
     }
+
+    public function delete(Request $request, $id)
+{
+    $comment = Comment::findOrFail($id);
+
+    if (!$this->roleService->canDeleteComment($request->user(), $comment)) {
+        return response()->json([
+            'message' => 'Only admin or the comment owner can delete this comment.',
+        ], 403);
+    }
+
+    $comment->delete();
+
+    return response()->json(null, 204);
+}
+
 }

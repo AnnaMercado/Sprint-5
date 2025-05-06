@@ -91,6 +91,26 @@ class RestaurantController extends Controller
     
         return response()->json(null, 204);
     }
-    
+
+
+    public function filter(Request $request)
+    {
+        $query = Restaurant::query();
+
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        if ($request->has('phone')) {
+            $query->where('phone', 'like', '%' . $request->input('phone') . '%');
+        }
+
+        $perPage = $request->input('per_page', 10);
+
+        $restaurants = $query->paginate($perPage);
+
+        return RestaurantResource::collection($restaurants);
+    }
+        
 }
 

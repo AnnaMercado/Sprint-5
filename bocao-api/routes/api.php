@@ -18,10 +18,12 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/restaurants', [RestaurantController::class, 'create'])->name('restaurants.create');
     Route::get('/restaurants', [RestaurantController::class, 'read'])->name('restaurants.read');
     Route::get('/restaurants/{id}', [RestaurantController::class, 'show'])->name('restaurants.show');
+    Route::get('/restaurants/filter', [RestaurantController::class, 'filter'])->name('restaurants.filter');
     Route::put('/restaurants/{id?}', [RestaurantController::class, 'update'])->name('restaurants.update');
     Route::delete('/restaurants/{id?}', [RestaurantController::class, 'delete'])->name('restaurants.delete');
 
     Route::post('/restaurants/{restaurant}/comments', [CommentController::class, 'create'])->name('comments.create');
     Route::get('/restaurants/{restaurant}/comments', [CommentController::class, 'read'])->name('restaurant.comments.read');
     Route::put('/comments/{commentId}', [CommentController::class, 'update'])->name('comments.update');
+    Route::delete('/comments/{id}', [CommentController::class, 'delete'])->name('comments.delete');
 });
