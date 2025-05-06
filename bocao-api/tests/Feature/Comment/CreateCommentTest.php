@@ -75,7 +75,7 @@
                      ->assertJsonValidationErrors(['content']);
         }
     
-        public function test_comment_cannot_be_created_for_nonexistent_restaurant(): void
+    public function test_comment_cannot_be_created_for_nonexistent_restaurant(): void
         {
             $this->createAuthenticatedUser();
     
