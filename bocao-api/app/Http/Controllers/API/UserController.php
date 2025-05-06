@@ -41,6 +41,7 @@ class UserController extends Controller
             'token' => $token,
         ], 201);
     }
+    
     public function read(Request $request)
     {
         if ($this->roleService->canViewAllUsers($request->user())) {

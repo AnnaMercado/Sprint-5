@@ -45,4 +45,15 @@ class RestaurantController extends Controller
         ], 201);
     }
 
+    public function read(Request $request)
+    {
+        return RestaurantResource::collection(Restaurant::all());
+    }
+
+    public function show(Request $request, $id)
+    {
+        $restaurant = Restaurant::findOrFail($id);
+        return new RestaurantResource($restaurant);
+    }
 }
+
