@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             PassportSeeder::class,
             RestaurantSeeder::class,
+            CommentSeeder::class,
         ]);
     }
 }
