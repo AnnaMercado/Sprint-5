@@ -44,4 +44,9 @@ class RoleService
     {
         return $user->hasRole('admin') || $user->id === $comment->user_id;
     }
+
+    public function canDeleteComment(User $authUser, Comment $comment): bool
+    {
+        return $authUser->hasRole('admin') || $authUser->id === $comment->user_id;
+    }
 }
