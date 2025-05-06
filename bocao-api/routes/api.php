@@ -22,4 +22,5 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/restaurants/{id?}', [RestaurantController::class, 'delete'])->name('restaurants.delete');
 
     Route::post('/restaurants/{restaurant}/comments', [CommentController::class, 'create'])->name('comments.create');
+    Route::get('/restaurants/{restaurant}/comments', [CommentController::class, 'read'])->name('restaurant.comments.read');
 });
