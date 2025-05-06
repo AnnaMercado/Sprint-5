@@ -90,6 +90,7 @@ class UserController extends Controller
         
         return new UserResource($user);
     }
+    
     public function delete(Request $request, $id = null)
     {
         if ($id === null) {

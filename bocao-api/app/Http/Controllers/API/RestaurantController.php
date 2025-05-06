@@ -76,5 +76,21 @@ class RestaurantController extends Controller
 
         return new RestaurantResource($restaurant);
     }
+
+    public function delete(Request $request, $id)
+    {
+        $restaurant = Restaurant::findOrFail($id);
+    
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json([
+                'message' => 'Only admin can access.',
+            ], 403);
+        }
+    
+        $restaurant->delete();
+    
+        return response()->json(null, 204);
+    }
+    
 }
 
