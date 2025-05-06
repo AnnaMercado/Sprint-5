@@ -25,4 +25,13 @@ class CommentController extends Controller
 
         return new CommentResource($comment);
     }
+
+    public function read(Request $request, $restaurantId)
+    {
+        $restaurant = Restaurant::findOrFail($restaurantId);
+
+        $comments = $restaurant->comments()->latest()->get();
+
+        return CommentResource::collection($comments);
+    }
 }
