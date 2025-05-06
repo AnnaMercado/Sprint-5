@@ -23,4 +23,5 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/restaurants/{restaurant}/comments', [CommentController::class, 'create'])->name('comments.create');
     Route::get('/restaurants/{restaurant}/comments', [CommentController::class, 'read'])->name('restaurant.comments.read');
+    Route::put('/comments/{commentId}', [CommentController::class, 'update'])->name('comments.update');
 });
