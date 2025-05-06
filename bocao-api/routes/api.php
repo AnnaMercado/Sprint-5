@@ -18,4 +18,5 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/restaurants', [RestaurantController::class, 'create'])->name('restaurants.create');
     Route::get('/restaurants', [RestaurantController::class, 'read'])->name('restaurants.read');
     Route::get('/restaurants/{id}', [RestaurantController::class, 'show'])->name('restaurants.show');
+    Route::put('/restaurants/{id?}', [RestaurantController::class, 'update'])->name('restaurants.update');
 });

@@ -55,5 +55,26 @@ class RestaurantController extends Controller
         $restaurant = Restaurant::findOrFail($id);
         return new RestaurantResource($restaurant);
     }
+
+    public function update(Request $request, $id)
+    {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json([
+                'message' => 'Only admin can access.',
+            ], 403);
+        }
+
+        $restaurant = Restaurant::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => ['sometimes', 'string', 'max:255'],
+            'address' => ['sometimes', 'string', 'max:255'],
+            'phone' => ['sometimes', 'string', 'max:255', 'unique:restaurants,phone,' . $restaurant->id],
+        ]);
+
+        $restaurant->update($validated);
+
+        return new RestaurantResource($restaurant);
+    }
 }
 
