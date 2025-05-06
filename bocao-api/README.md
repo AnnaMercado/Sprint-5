@@ -1,61 +1,170 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+🍽️ Bocao API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A RESTful API built with Laravel to manage users, restaurants, and comments. It features OAuth2 authentication with Laravel Passport and role-based access control using Spatie.
+⚙️ Requirements
 
-## About Laravel
+    PHP 8.2+
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+    Laravel 12.x
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+    MySQL or compatible DB
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    Composer
 
-## Learning Laravel
+    XAMPP (for local development)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    Laravel Passport
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    Spatie Laravel Permission
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+📦 Installed Dependencies
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    laravel/framework – Laravel core
 
-### Premium Partners
+    laravel/passport – OAuth2 authentication
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+    spatie/laravel-permission – Roles and permissions
 
-## Contributing
+    fakerphp/faker – Fake data generator for seeders
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    phpunit/phpunit – Testing
 
-## Code of Conduct
+    mockery/mockery, nunomaduro/collision, laravel/tinker – Dev tools
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+☕ Installation
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Clone the repository:
 
-## License
+git clone https://github.com/AnnaMercado/Sprint-5
+cd bocao-api
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Install dependencies:
+
+composer install
+
+Set up your environment file:
+
+cp .env.example .env
+
+    🔧 In some environments, set APP_MAINTENANCE_DRIVER=file in your .env.
+
+Generate application key:
+
+php artisan key:generate
+
+
+🔐 Install and Configure Passport
+
+composer require laravel/passport
+php artisan migrate
+php artisan passport:install
+
+🔑 Add Passport Secrets to .env
+
+After running:
+
+php artisan passport:install
+
+You’ll see output like this:
+
+Personal access client created successfully.
+Client ID: 1
+Client Secret: abc123def456...
+
+Password grant client created successfully.
+Client ID: 2
+Client Secret: xyz789ghi012...
+
+Use the exact values from that output and add them to your .env file:
+
+PASSPORT_PERSONAL_ACCESS_CLIENT_ID=1
+PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=abc123def456...
+
+PASSPORT_PASSWORD_GRANT_CLIENT_ID=2
+PASSPORT_PASSWORD_GRANT_CLIENT_SECRET=xyz789ghi012...
+
+    🔐 Important: These values must match what Passport generated. If you lose them, you can retrieve them from the database:
+
+SELECT * FROM oauth_clients;
+
+That table contains all client IDs and secrets.
+
+🛡️ Install Spatie Permissions
+
+composer require spatie/laravel-permission
+php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+php artisan migrate
+
+🧪 Seeding the Database
+
+Make sure your .env file is configured to point to a valid database.
+
+Seed the app with:
+
+php artisan db:seed
+
+This will:
+
+    Create roles (admin, user)
+
+    Create test users
+
+    Create Passport clients
+
+    Populate restaurants and comments
+
+
+
+🔐 Roles and Permissions
+
+The API uses a custom RoleService to enforce fine-grained permissions based on the user's role.
+Roles
+
+    Admin: Full access to all resources.
+
+    User: Can interact with comments and view restaurant data.
+
+Permissions by Resource
+Action	Admin	User
+View all users	✅	❌
+View user profiles	✅	❌
+Update user profiles	✅	❌
+Create restaurants	✅	❌
+Update restaurants	✅	❌
+Delete restaurants	✅	❌
+Create comments	✅	✅
+View comments	✅	✅
+Update own comments	✅	✅
+Delete own comments	✅	✅
+
+    Regular users can only update or delete their own comments. All other actions require admin privileges.
+
+
+Token Authentication
+
+All protected routes require a valid OAuth2 token:
+
+    Use the /api/tokens endpoint to login and obtain a token.
+
+    Use Authorization: Bearer {token} in headers for authenticated requests.
+
+    Use DELETE /api/tokens to log out and revoke the current token.
+    
+
+🧰 Tech Stack
+
+    Laravel 12 – PHP web framework
+
+    Laravel Passport – OAuth2 API authentication
+
+    Spatie Permission – Role & permission management
+
+    MySQL – Database
+
+    PHP 8.2 – Backend language
+
+    XAMPP – Development environment
+
+    Postman – For testing API endpoints
